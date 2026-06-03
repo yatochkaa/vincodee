@@ -189,6 +189,27 @@ POSITION_CAT_GROUPS: list[set[int]] = [
     {273,  274},
 ]
 
+# ══════════════════════════════════════════════════════════════════
+#  БЕСПОЗИЦИОННЫЕ КАТЕГОРИИ (безопасный fallback на таймаут/пусто)
+# ══════════════════════════════════════════════════════════════════
+#  Это «расходники», у которых нет стороны/позиции (перёд/зад,
+#  лево/право, внутр./наруж.). Для них допустимо показать ТИПОВОЙ OEM
+#  марки из OEM_FALLBACK_ARTICLES, когда источник молчит (TimeoutError)
+#  или отдал пусто (NO) — с честной пометкой «сверь перед заказом».
+#
+#  Категории:
+#    7   — масляный фильтр
+#    8   — воздушный фильтр
+#    424 — салонный фильтр
+#    686 — свечи зажигания/накаливания
+#    9   — топливный фильтр (если присутствует в словаре марки)
+#    774 — альт. cat масляного фильтра
+#
+#  ВАЖНО: сюда НЕ входят позиционные cat (тормоза/амортизаторы/пружины/
+#  рычаги — см. POSITION_CAT_GROUPS) и критичные (ГРМ — NO_FALLBACK_CATS).
+#  Для них fallback на типовой OEM остаётся ЗАПРЕЩЁН.
+NON_POSITIONAL_CATS: set[str] = {"7", "8", "9", "424", "686", "774"}
+
 # ── Blacklist OEM-артикулов по имени детали ──
 FALLBACK_OEM_BLACKLIST: dict[str, list[str]] = {
     "амортизатор": ["MR992330", "MR992459"],
@@ -2380,7 +2401,18 @@ def _is_supplier_brand(brand: str) -> bool:
 async def try_oem_fallback(
     session: aiohttp.ClientSession, manu_name: str, cat_id: str,
     part_name: str | None = None,             # ← новый параметр
-) -> tuple[...] | None:
+) -> tuple[tuple[str, str], list[tuple[str, str]]] | None:
+    """Последний резерв: типовой OEM марки/категории из OEM_FALLBACK_ARTICLES.
+
+    Возвращает ((brand, oem_article), crosses) либо None, если:
+      • для марки/cat нет типового OEM в словаре;
+      • единственный кандидат(ы) попал(и) в FALLBACK_OEM_BLACKLIST.
+
+    crosses — отфильтрованные и отсортированные аналоги (может быть пустым
+    списком, если tecdocCrosses ничего не вернул). Берётся первый кандидат,
+    давший аналоги; если аналогов нет ни у кого — возвращается первый
+    допустимый OEM с пустым списком кроссов (артикул всё равно полезен).
+    """
     manu_upper = manu_name.upper() if manu_name else ""
     candidates = OEM_FALLBACK_ARTICLES.get(manu_upper, {}).get(cat_id, [])
     if not candidates:
@@ -2393,12 +2425,112 @@ async def try_oem_fallback(
         for key, arts in FALLBACK_OEM_BLACKLIST.items():
             if key in pn_lower:
                 blacklisted.update(arts)
+    blacklisted_norm = {normalize_article(b) for b in blacklisted}
+
+    fb_brand = manu_name or manu_upper or "OEM"
+    first_allowed: tuple[str, str] | None = None
 
     for art in candidates:
-        if normalize_article(art) in {normalize_article(b) for b in blacklisted}:
+        if normalize_article(art) in blacklisted_norm:
             continue                           # ← пропускаем заблокированный OEM
+
+        if first_allowed is None:
+            first_allowed = (fb_brand, art)
+
         raw = await api_get_crosses(session, art)
-        ...
+        crosses_all = filter_crosses(raw, art, fb_brand) if raw else []
+        if crosses_all:
+            crosses = sort_crosses_by_priority(crosses_all)
+            return (fb_brand, art), crosses
+
+    # Ни один кандидат не дал аналогов — возвращаем первый допустимый OEM
+    # без кроссов (сам артикул уже полезен пользователю).
+    if first_allowed is not None:
+        return first_allowed, []
+
+    return None
+
+
+# ══════════════════════════════════════════════════════════════════
+#  БЕЗОПАСНЫЙ FALLBACK ДЛЯ БЕСПОЗИЦИОННЫХ КАТЕГОРИЙ (timeout/пусто)
+# ══════════════════════════════════════════════════════════════════
+
+def is_nonpositional_fallback_allowed(
+    cat_id: str,
+    api_status: str,
+    error_code: str | None,
+    explicit_side: bool = False,
+) -> bool:
+    """Разрешён ли резервный типовой OEM для беспозиционной категории.
+
+    Условия (ВСЕ должны выполняться):
+      • cat входит в NON_POSITIONAL_CATS (фильтры, свечи и т.п.);
+      • cat НЕ в NO_FALLBACK_CATS (ГРМ — всегда честный отказ);
+      • пользователь НЕ указал сторону явно (расходники её не имеют,
+        но перестраховываемся, чтобы не подсунуть «не ту» деталь);
+      • api_status == "NO" (база пустая) ЛИБО api_status == "ERR" с
+        «молчанием источника»: error_code in {None, "TimeoutError",
+        "ServerTimeoutError", "NULL_BODY"}.
+
+    RATE_LIMIT / AUTH / SERVER_ERROR(5xx с телом-ошибкой) / JSON_ERROR /
+    MALFORMED — это НЕ «молчание», fallback не включаем (честный ERR).
+    """
+    if explicit_side:
+        return False
+    if cat_id in NO_FALLBACK_CATS:
+        return False
+    if cat_id not in NON_POSITIONAL_CATS:
+        return False
+
+    if api_status == "NO":
+        return True
+
+    if api_status == "ERR":
+        ec = (error_code or None)
+        # «Источник молчит»: таймаут или пустое тело (или вовсе без кода).
+        return ec in (None, "TimeoutError", "ServerTimeoutError", "NULL_BODY")
+
+    return False
+
+
+def build_nonpositional_fallback_message(
+    *,
+    group_name: str,
+    car_str: str,
+    vin: str,
+    cat_id: str,
+    manu_name: str,
+    fb_brand: str,
+    fb_art: str,
+    fb_crosses: list[tuple[str, str]],
+    reason: str,
+) -> str:
+    """Текст ответа с резервным типовым OEM (беспозиционная категория)."""
+    marque = manu_name or fb_brand or "марки"
+    lines = [
+        f"⚠️ Источник не дал данных ({reason}). "
+        f"Типовой OEM для <b>{marque}</b>:",
+        *([f"🚗 {car_str}"] if car_str else []),
+        f"VIN: <code>{vin}</code>",
+        f"Категория: <code>{cat_id}</code>",
+        "─" * 28,
+        f"🔵 <b>Резервный OEM (требует проверки!):</b>",
+        f"  ⚠️ <b>{fb_brand}</b>  <code>{fb_art}</code>",
+    ]
+    if fb_crosses:
+        top = fb_crosses[:10]
+        lines.append("")
+        lines.append(
+            f"🔄 <b>Аналоги (топ-{len(top)}) — {fb_brand} <code>{fb_art}</code>:</b>"
+        )
+        lines.extend(f"  • <b>{b}</b>  <code>{a}</code>" for b, a in top)
+    else:
+        lines.append("")
+        lines.append("<i>Аналоги для типового OEM не найдены.</i>")
+    lines.append("")
+    lines.append("⚠️ <i>Артикул типовой — сверь с каталогом перед заказом.</i>")
+    return "\n".join(lines)
+
 
 # ══════════════════════════════════════════════════════════════════
 #  ФОРМАТИРОВАНИЕ
@@ -2711,7 +2843,15 @@ async def cmd_vin(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     )
                     continue
 
-                fallback = await try_oem_fallback(session, manu_name, cat_id, part_name=part_name)
+                # Безопасный резерв ТОЛЬКО для беспозиционных расходников.
+                # Позиционные/критичные cat сюда не попадают (см. проверку).
+                allow_fb = is_nonpositional_fallback_allowed(
+                    cat_id, "NO", api_result.get("error_code"), explicit_side
+                )
+                fallback = (
+                    await try_oem_fallback(session, manu_name, cat_id, part_name=part_name)
+                    if allow_fb else None
+                )
                 if not fallback:
                     hint = NO_FALLBACK_HINTS.get(cat_id, "")
                     await update.message.reply_text(
@@ -2720,18 +2860,14 @@ async def cmd_vin(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     )
                     continue
 
-                fb_brand, fb_art, fb_crosses = fallback
-                lines = [
-                    f"ℹ️ По категории **{group_name}** API не вернуло данных, поэтому показан резервный OEM.",
-                    *([f"🚗 {car_str}"] if car_str else []),
-                    f"VIN: <code>{vin}</code>",
-                    "─" * 28,
-                    f"🔵 Резервный OEM: **{fb_brand}** — <code>{fb_art}</code>",
-                ]
-                if fb_crosses:
-                    lines.append("🔄 Аналоги:")
-                    lines.extend([f" • **{b}** — <code>{a}</code>" for b, a in fb_crosses[:10]])
-                await update.message.reply_text("\n".join(lines), parse_mode="HTML")
+                (fb_brand, fb_art), fb_crosses = fallback
+                msg = build_nonpositional_fallback_message(
+                    group_name=group_name, car_str=car_str, vin=vin,
+                    cat_id=cat_id, manu_name=manu_name,
+                    fb_brand=fb_brand, fb_art=fb_art, fb_crosses=fb_crosses,
+                    reason="пусто",
+                )
+                await update.message.reply_text(msg, parse_mode="HTML")
                 continue
 
             # ── СЦЕНАРИЙ C2: техническая ошибка ERR ──
@@ -2739,6 +2875,27 @@ async def cmd_vin(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 err_status = api_result.get("http_status") or api_result.get("status")
                 err_code = api_result.get("error_code")
                 err_msg = api_result.get("message") or "Источник временно не дал надёжный ответ"
+
+                # Беспозиционные расходники: если источник «молчит»
+                # (timeout / пустое тело) — показываем типовой OEM марки
+                # вместо голого отказа. Позиционные/критичные cat и
+                # «жёсткие» ошибки (RATE_LIMIT/AUTH/JSON) сюда не проходят.
+                if is_nonpositional_fallback_allowed(
+                    cat_id, "ERR", err_code, explicit_side
+                ):
+                    fallback = await try_oem_fallback(
+                        session, manu_name, cat_id, part_name=part_name
+                    )
+                    if fallback:
+                        (fb_brand, fb_art), fb_crosses = fallback
+                        msg = build_nonpositional_fallback_message(
+                            group_name=group_name, car_str=car_str, vin=vin,
+                            cat_id=cat_id, manu_name=manu_name,
+                            fb_brand=fb_brand, fb_art=fb_art, fb_crosses=fb_crosses,
+                            reason=f"timeout/{err_code}" if err_code else "timeout",
+                        )
+                        await update.message.reply_text(msg, parse_mode="HTML")
+                        continue
 
                 lines = [
                     f"⚠️ По категории **{group_name}** не удалось надёжно получить данные от поставщика.",
