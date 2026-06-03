@@ -1,0 +1,2061 @@
+{
+  "vindecode:Z8TXLCW6WCM902224": {
+    "manuName": "MITSUBISHI",
+    "modelName": "OUTLANDER",
+    "typeName": "3000 - H-LINE(4WD/5P/EURO4),S6FA/T PCMA/LHD",
+    "katalog": "MMC202601",
+    "modely": "CW6W",
+    "rynok": "Европа (EUROPE)"
+  },
+  "parts:Z8TXLCW6WCM902224:10": {
+    "ok": false,
+    "is_error": false,
+    "is_empty": true,
+    "api_status": "NO",
+    "semantic_status": "NOT_APPLICABLE",
+    "http_status": 200,
+    "status": 200,
+    "error_code": null,
+    "message": null,
+    "total": 0,
+    "items": [],
+    "items_raw": [],
+    "total_raw": 0,
+    "raw": [],
+    "_attempts": 1,
+    "_retried": false
+  },
+  "parts:Z8TXLCW6WCM902224:774": {
+    "ok": false,
+    "is_error": false,
+    "is_empty": true,
+    "api_status": "NO",
+    "semantic_status": "NOT_APPLICABLE",
+    "http_status": 200,
+    "status": 200,
+    "error_code": null,
+    "message": null,
+    "total": 0,
+    "items": [],
+    "items_raw": [],
+    "total_raw": 0,
+    "raw": [],
+    "_attempts": 1,
+    "_retried": false
+  },
+  "parts:Z8TXLCW6WCM902224:8": {
+    "ok": true,
+    "is_error": false,
+    "is_empty": false,
+    "api_status": "OK",
+    "semantic_status": "NOT_APPLICABLE",
+    "http_status": 200,
+    "status": 200,
+    "error_code": null,
+    "message": null,
+    "total": 78,
+    "items": [
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AMC",
+        "article": "MA-4613",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "1500A023",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "1500A086",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "MZ690445",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444.RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "GREAT WALL",
+        "article": "1109104K00J",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "INNOCENTI",
+        "article": "585161",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ISUZU",
+        "article": "CAF100881P",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ISUZU",
+        "article": "U881/606",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "153071760458",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "154703812320",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "30.533.00",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "600000033250",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "600000033310",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "A2279",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "CA10525",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KIA",
+        "article": "BFA2243",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KRUPP",
+        "article": "QFA0572",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A023",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A086",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A190",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "MZ690445",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444-SS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444-WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1609907380",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROV/TRI/JAG/AUS/MG",
+        "article": "20-05-531",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/AUSTIN",
+        "article": "ELP9225",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/AUSTIN",
+        "article": "FA3267",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/TRIUMPH/AUSTIN",
+        "article": "SB2165",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      }
+    ],
+    "items_raw": [
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ALFA ROMEO",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AMC",
+        "article": "MA-4613",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "1500A023",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "1500A086",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AUWÄRTER",
+        "article": "MZ690445",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "AWD",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444 XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444.RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444.XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "CITROËN/PEUGEOT",
+        "article": "1444WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "GREAT WALL",
+        "article": "1109104K00J",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "INNOCENTI",
+        "article": "585161",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ISUZU",
+        "article": "CAF100881P",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ISUZU",
+        "article": "U881/606",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "153071760458",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "154703812320",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "30.533.00",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "600000033250",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "600000033310",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "A2279",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KHD",
+        "article": "CA10525",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KIA",
+        "article": "BFA2243",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "KRUPP",
+        "article": "QFA0572",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A023",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A086",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "1500A190",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "MITSUBISHI",
+        "article": "MZ690445",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RU",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 RZ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444 XE",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444-SS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444-WW",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444.W",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1444SA",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "16 111 583 80",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT",
+        "article": "1609907380",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 RT",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 SH",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 SJ",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "PEUGEOT MOTORCYCLES",
+        "article": "1444 WS",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROV/TRI/JAG/AUS/MG",
+        "article": "20-05-531",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/AUSTIN",
+        "article": "ELP9225",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/AUSTIN",
+        "article": "FA3267",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      },
+      {
+        "brand": "ROVER/TRIUMPH/AUSTIN",
+        "article": "SB2165",
+        "name": "Воздушный фильтр",
+        "group": "Система подачи воздуха",
+        "shortname": "Фильтр"
+      }
+    ],
+    "total_raw": 78,
+    "raw": [
+      {
+        "group": "Система подачи воздуха",
+        "name": "Воздушный фильтр",
+        "parts": "ALFA ROMEO|1444.RT,ALFA ROMEO|1444.RU,ALFA ROMEO|1444.SH,ALFA ROMEO|1444.SJ,ALFA ROMEO|1444.W,ALFA ROMEO|1444.WS,ALFA ROMEO|1444.XE,ALFA ROMEO|16 111 583 80,AMC|MA-4613,AUWÄRTER|1500A023,AUWÄRTER|1500A086,AUWÄRTER|MZ690445,AWD|1444.RT,AWD|1444.RU,AWD|1444.SH,AWD|1444.SJ,AWD|1444.W,AWD|1444.WS,AWD|1444.XE,AWD|16 111 583 80,CITROËN|1444 RT,CITROËN|1444 RU,CITROËN|1444 SA,CITROËN|1444 SH,CITROËN|1444 SJ,CITROËN|1444 WS,CITROËN|1444 WW,CITROËN|1444 XE,CITROËN|1444-RU,CITROËN|1444-SA,CITROËN|1444-SJ,CITROËN|1444-WS,CITROËN|1444-WW,CITROËN|1444-XE,CITROËN|1444.RT,CITROËN|1444.RU,CITROËN|1444.RZ,CITROËN|1444.SA,CITROËN|1444.SH,CITROËN|1444.SJ,CITROËN|1444.W,CITROËN|1444.WS,CITROËN|1444.XE,CITROËN|1444RT,CITROËN|1444RU,CITROËN|1444RZ,CITROËN|1444SA,CITROËN|1444SH,CITROËN|1444SJ,CITROËN|1444W,CITROËN|1444WS,CITROËN|1444WW,CITROËN|1444XE,CITROËN|16 111 583 80,CITROËN|1611158380,CITROËN/PEUGEOT|1444.RT,CITROËN/PEUGEOT|1444.RU,CITROËN/PEUGEOT|1444.SA,CITROËN/PEUGEOT|1444.SH,CITROËN/PEUGEOT|1444.SJ,CITROËN/PEUGEOT|1444.WS,CITROËN/PEUGEOT|1444.XE,CITROËN/PEUGEOT|1444RT,CITROËN/PEUGEOT|1444RU,CITROËN/PEUGEOT|1444RZ,CITROËN/PEUGEOT|1444SA,CITROËN/PEUGEOT|1444SH,CITROËN/PEUGEOT|1444SJ,CITROËN/PEUGEOT|1444WS,CITROËN/PEUGEOT|1444WW,CITROËN/PEUGEOT|1444XE,GREAT WALL|1109104K00J,IKARUS|C 27 003/1,IKARUS|C270031,INNOCENTI|585161,INTERNATIONAL HARV.|0 986 AF2 581,INTERNATIONAL HARV.|0 986 AF2 661,INTERNATIONAL HARV.|0 986 AF2 875,INTERNATIONAL HARV.|A1294,INTERNATIONAL HARV.|F 026 400 200,INTERNATIONAL HARV.|F026400200,INTERNATIONAL HARV.|LX 2616,ISUZU|CAF100881P,ISUZU|U881/606,IVECO|J1325046,IVECO|J1325054,KHD|153071760458,KHD|154703812320,KHD|30.533.00,KHD|600000033250,KHD|600000033310,KHD|A2279,KHD|CA10525,KIA|BFA2243,KRUPP|QFA0572,MITSUBISHI|1500A023,MITSUBISHI|1500A086,MITSUBISHI|1500A190,MITSUBISHI|MZ690445,PEUGEOT|1444 RT,PEUGEOT|1444 RU,PEUGEOT|1444 RZ,PEUGEOT|1444 SH,PEUGEOT|1444 SJ,PEUGEOT|1444 WS,PEUGEOT|1444 XE,PEUGEOT|1444-RT,PEUGEOT|1444-RU,PEUGEOT|1444-RZ,PEUGEOT|1444-SH,PEUGEOT|1444-SS,PEUGEOT|1444-WS,PEUGEOT|1444-WW,PEUGEOT|1444-XE,PEUGEOT|1444.RT,PEUGEOT|1444.RU,PEUGEOT|1444.RZ,PEUGEOT|1444.SH,PEUGEOT|1444.SJ,PEUGEOT|1444.W,PEUGEOT|1444.WS,PEUGEOT|1444.WW,PEUGEOT|1444.XE,PEUGEOT|1444RT,PEUGEOT|1444RU,PEUGEOT|1444RZ,PEUGEOT|1444SA,PEUGEOT|1444SH,PEUGEOT|1444SJ,PEUGEOT|1444W,PEUGEOT|1444WS,PEUGEOT|1444WW,PEUGEOT|1444XE,PEUGEOT|16 111 583 80,PEUGEOT|1609907380,PEUGEOT|1611158380,PEUGEOT MOTORCYCLES|1444 RT,PEUGEOT MOTORCYCLES|1444 SH,PEUGEOT MOTORCYCLES|1444 SJ,PEUGEOT MOTORCYCLES|1444 WS,ROV/TRI/JAG/AUS/MG|20-05-531,ROV/TRI/JAG/AUS/MG|2005531,ROVER/AUSTIN|ELP9225,ROVER/AUSTIN|FA3267,ROVER/TRIUMPH/AUSTIN|SB2165",
+        "shortname": "Фильтр"
+      }
+    ],
+    "_attempts": 1,
+    "_retried": false
+  },
+  "crosses:1500A023": [
+    {
+      "brand": "Mchanix",
+      "crossBrand": "CITROËN",
+      "crossNumber": "1500A023",
+      "number": "MTARF-010"
+    },
+    {
+      "brand": "BOSCH",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "0 986 AF2 661"
+    },
+    {
+      "brand": "BOSCH",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "0 986 AF2 875"
+    },
+    {
+      "brand": "FEBEST",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "0442-002"
+    },
+    {
+      "brand": "KRAFTVOLL GERMANY",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "06010230"
+    },
+    {
+      "brand": "FEBI BILSTEIN",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "109112"
+    },
+    {
+      "brand": "MEYLE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "11-12 321 0025"
+    },
+    {
+      "brand": "WXQP",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "11008"
+    },
+    {
+      "brand": "IAP QUALITY PARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "121-12055"
+    },
+    {
+      "brand": "AKRON-MALÒ",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1500511"
+    },
+    {
+      "brand": "PROFIT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1512-2642"
+    },
+    {
+      "brand": "PROFIT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1512-4354"
+    },
+    {
+      "brand": "MAGNETI MARELLI",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "153071760458"
+    },
+    {
+      "brand": "MAGNETI MARELLI",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "154703812320"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1611158380"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1646455280"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1672358080"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1680334480"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1682263280"
+    },
+    {
+      "brand": "KRAFT AUTOMOTIVE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "1714225"
+    },
+    {
+      "brand": "AUTOMEGA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "180034710"
+    },
+    {
+      "brand": "MEAT & DORIA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "18375"
+    },
+    {
+      "brand": "HOFFER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "18375"
+    },
+    {
+      "brand": "ACDelco",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "19372634"
+    },
+    {
+      "brand": "ASHIKA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "20-05-531"
+    },
+    {
+      "brand": "JAPKO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "20531"
+    },
+    {
+      "brand": "JPN",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "20F5024-JPN"
+    },
+    {
+      "brand": "Omnicraft",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "2133203"
+    },
+    {
+      "brand": "MAXGEAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "26-0584"
+    },
+    {
+      "brand": "DENSO-SEA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "260300-06904W"
+    },
+    {
+      "brand": "MASTER-SPORT GERMANY",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "27003/1-LF-PCS-MS"
+    },
+    {
+      "brand": "ProfiPower",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "2F0132"
+    },
+    {
+      "brand": "HART",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "354 485"
+    },
+    {
+      "brand": "RED-LINE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "36MI023"
+    },
+    {
+      "brand": "MEC-DIESEL",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "404494"
+    },
+    {
+      "brand": "KOLBENSCHMIDT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "50014496"
+    },
+    {
+      "brand": "VALEO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "585161"
+    },
+    {
+      "brand": "OSSCA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "66072"
+    },
+    {
+      "brand": "ASAM AUTOMOTIVE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "70132"
+    },
+    {
+      "brand": "STELLOX",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "71-01053-SX"
+    },
+    {
+      "brand": "TOPRAN",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "722 303"
+    },
+    {
+      "brand": "MOTRIO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "8660005838"
+    },
+    {
+      "brand": "RIDEX",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "8A0066"
+    },
+    {
+      "brand": "HELLA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "8ZA 358 321-001"
+    },
+    {
+      "brand": "SAKURA Automotive",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A-5828"
+    },
+    {
+      "brand": "SAKURA Automotive",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A-58300"
+    },
+    {
+      "brand": "KAISHIN",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A10192"
+    },
+    {
+      "brand": "PURFLUX",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A1294"
+    },
+    {
+      "brand": "DENCKERMANN",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A141425"
+    },
+    {
+      "brand": "RYCO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A1622"
+    },
+    {
+      "brand": "TECNOCAR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A2279"
+    },
+    {
+      "brand": "Azumi",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A23025"
+    },
+    {
+      "brand": "JS ASAKASHI",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A3025"
+    },
+    {
+      "brand": "DAVID VASCO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A307"
+    },
+    {
+      "brand": "ACKOJA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A37-0402"
+    },
+    {
+      "brand": "1A FIRST AUTOMOTIVE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "A63503"
+    },
+    {
+      "brand": "BLUE PRINT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "ADC42250"
+    },
+    {
+      "brand": "STEP FILTERS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AE45215"
+    },
+    {
+      "brand": "FINWHALE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AF914"
+    },
+    {
+      "brand": "FINWHALE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AF934"
+    },
+    {
+      "brand": "MILES",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AFAI079"
+    },
+    {
+      "brand": "GUD",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AG1492"
+    },
+    {
+      "brand": "FILTRON",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AP 120/4"
+    },
+    {
+      "brand": "SAKURA Automotive",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AR-58281"
+    },
+    {
+      "brand": "FRIGAIR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AR16.107"
+    },
+    {
+      "brand": "TECNECO FILTERS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AR27003/1PMJ"
+    },
+    {
+      "brand": "A.Z. Meisterteile",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "AZMT-41-030-1817"
+    },
+    {
+      "brand": "CWORKS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "B130710321"
+    },
+    {
+      "brand": "CWORKS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "B130G0278"
+    },
+    {
+      "brand": "CWORKS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "B13MR0018"
+    },
+    {
+      "brand": "JC PREMIUM",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "B25061PR"
+    },
+    {
+      "brand": "BAPMIC",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "BF0427400096"
+    },
+    {
+      "brand": "BORG & BECK",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "BFA2243"
+    },
+    {
+      "brand": "MANN-FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "C 27 003/1"
+    },
+    {
+      "brand": "ASHUKI by Palidium",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "C052-05"
+    },
+    {
+      "brand": "FRAM",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "CA10525"
+    },
+    {
+      "brand": "Fram-Au",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "CA10525"
+    },
+    {
+      "brand": "CHAMPION",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "CAF100881P"
+    },
+    {
+      "brand": "COMLINE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "CMB12401"
+    },
+    {
+      "brand": "DIAMAX",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "DA2811"
+    },
+    {
+      "brand": "DYNAMATRIX",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "DAF2616"
+    },
+    {
+      "brand": "DACO Germany",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "DFA0614"
+    },
+    {
+      "brand": "Dr!ve+",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "DP1110.10.0157"
+    },
+    {
+      "brand": "Dr!ve+",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "DP1110.10.0509"
+    },
+    {
+      "brand": "HENGST FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "E1146L"
+    },
+    {
+      "brand": "MANDO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "EAF00206T"
+    },
+    {
+      "brand": "OPEN PARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "EAF3413.10"
+    },
+    {
+      "brand": "COMLINE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "EAF730"
+    },
+    {
+      "brand": "MECAFILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "ELP9225"
+    },
+    {
+      "brand": "BOSCH",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "F 026 400 200"
+    },
+    {
+      "brand": "KAMOKA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "F227601"
+    },
+    {
+      "brand": "FI.BA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA-319"
+    },
+    {
+      "brand": "JAPANPARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA-531S"
+    },
+    {
+      "brand": "Sakura Filters AU",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA-5828"
+    },
+    {
+      "brand": "DJ PARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA1079"
+    },
+    {
+      "brand": "BREMSI",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA1196"
+    },
+    {
+      "brand": "MGA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "FA3267"
+    },
+    {
+      "brand": "FIL FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "HP 5061"
+    },
+    {
+      "brand": "IBERIS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "IB771008"
+    },
+    {
+      "brand": "HERTH+BUSS JAKOPARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "J1325046"
+    },
+    {
+      "brand": "PEMEBLA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "JAPFA-531S"
+    },
+    {
+      "brand": "MFILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "K 7094"
+    },
+    {
+      "brand": "LYNXauto",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LA-396"
+    },
+    {
+      "brand": "ZEKKERT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LF-1057"
+    },
+    {
+      "brand": "LUCAS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LFAF315"
+    },
+    {
+      "brand": "LUCAS FILTERS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LFAF315"
+    },
+    {
+      "brand": "LYNXauto",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LK-3049"
+    },
+    {
+      "brand": "LYNXauto",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LK-3049-1"
+    },
+    {
+      "brand": "MOTAQUIP",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LVFA1452"
+    },
+    {
+      "brand": "KNECHT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LX 2616"
+    },
+    {
+      "brand": "MAHLE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LX 2616"
+    },
+    {
+      "brand": "MAHLE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LX 2722"
+    },
+    {
+      "brand": "METAL LEVE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "LX 3695"
+    },
+    {
+      "brand": "NPS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "M132I40"
+    },
+    {
+      "brand": "AMC Filter",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MA-4613"
+    },
+    {
+      "brand": "KAVO PARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MA-4613"
+    },
+    {
+      "brand": "CLEAN FILTERS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MA3146"
+    },
+    {
+      "brand": "MDR",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MAF-3531"
+    },
+    {
+      "brand": "ALCO FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MD-8398"
+    },
+    {
+      "brand": "Mchanix",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "MTARF-010"
+    },
+    {
+      "brand": "NIPPARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "N1325055"
+    },
+    {
+      "brand": "NAPA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "NFA1188"
+    },
+    {
+      "brand": "OPTIMAL",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "OP-FAF10128"
+    },
+    {
+      "brand": "MISFAT",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "P504"
+    },
+    {
+      "brand": "MULLER FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "PA3503"
+    },
+    {
+      "brand": "CoopersFiaam",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "PA7586"
+    },
+    {
+      "brand": "AVS AUTOPARTS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "PM980"
+    },
+    {
+      "brand": "PIPERCROSS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "PP1762"
+    },
+    {
+      "brand": "PIPERCROSS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "PP1762DRY"
+    },
+    {
+      "brand": "QUINTON HAZELL",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "QFA0572"
+    },
+    {
+      "brand": "GCG TURBOS AUSTRALIA",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "RY-A1622"
+    },
+    {
+      "brand": "SRLine",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "S11-4208"
+    },
+    {
+      "brand": "HIFI FILTER",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "SA 4101"
+    },
+    {
+      "brand": "SCT - MANNOL",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "SB 2165"
+    },
+    {
+      "brand": "STARLINE",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "SF VF7587"
+    },
+    {
+      "brand": "Stark",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "SKAF-0060065"
+    },
+    {
+      "brand": "SpeedMate",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "SM-AFJ068"
+    },
+    {
+      "brand": "CARVILLE RACING",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "TR270031"
+    },
+    {
+      "brand": "CHAMPION",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "U881/606"
+    },
+    {
+      "brand": "VAICO",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "V22-0277"
+    },
+    {
+      "brand": "WIX FILTERS",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "WA9623"
+    },
+    {
+      "brand": "WILMINK GROUP",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "WG1216250"
+    },
+    {
+      "brand": "WILMINK GROUP",
+      "crossBrand": "MITSUBISHI",
+      "crossNumber": "1500A023",
+      "number": "WG1378633"
+    },
+    {
+      "brand": "MAXGEAR",
+      "crossBrand": "MITSUBISHI (BBDC)",
+      "crossNumber": "1500A023",
+      "number": "26-0584"
+    },
+    {
+      "brand": "MANN-FILTER",
+      "crossBrand": "MITSUBISHI (BBDC)",
+      "crossNumber": "1500A023",
+      "number": "C 27 003/1"
+    },
+    {
+      "brand": "STARLINE",
+      "crossBrand": "MITSUBISHI (BBDC)",
+      "crossNumber": "1500A023",
+      "number": "SF VF7587"
+    },
+    {
+      "brand": "OSSCA",
+      "crossBrand": "PEUGEOT",
+      "crossNumber": "1500A023",
+      "number": "66072"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "PROTON",
+      "crossNumber": "1500A023",
+      "number": "1646455280"
+    },
+    {
+      "brand": "EUROREPAR",
+      "crossBrand": "PROTON",
+      "crossNumber": "1500A023",
+      "number": "1672358080"
+    }
+  ]
+}
