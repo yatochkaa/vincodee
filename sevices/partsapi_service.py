@@ -16,12 +16,58 @@ BASE_URL = "https://api.partsapi.ru"
 PARTSAPI_KEY_VINDECODE = os.getenv("PARTSAPI_KEY_VINDECODE")
 PARTSAPI_KEY_VIN       = os.getenv("PARTSAPI_KEY_VIN")
 PARTSAPI_KEY_CROSSES   = os.getenv("PARTSAPI_KEY_CROSSES")
-PARTSAPI_KEY_TECDOC    = os.getenv("PARTSAPI_KEY_TECDOC")    # getMakes/getModels/getCars/getSearchTree/getArticles
-PARTSAPI_KEY_OE        = os.getenv("PARTSAPI_KEY_OE")        # getOEApplicability
-PARTSAPI_KEY_TO        = os.getenv("PARTSAPI_KEY_TO")        # toParts / toOils
+PARTSAPI_KEY_TECDOC    = os.getenv("PARTSAPI_KEY_TECDOC")   # getMakes/getModels/getCars/getSearchTree/getArticles
+PARTSAPI_KEY_OE        = os.getenv("PARTSAPI_KEY_OE")       # getOEApplicability
+PARTSAPI_KEY_TO        = os.getenv("PARTSAPI_KEY_TO")       # toParts / toOils
 
 DEFAULT_TIMEOUT = 15.0
 LANG_RU = 16  # язык ответов — русский
+
+# ── Маппинг cat_id бота → STR_ID дерева TecDoc ────────────────────────────────
+# Получен из getSearchTree(carId=111480) для MITSUBISHI OUTLANDER II CW6W.
+# STR_ID стабильны между модификациями — используем как универсальный маппинг.
+CAT_TO_STR_ID: dict[str, int] = {
+"7":    100259,   # Масляный фильтр
+"10":   100259,   # Масляный фильтр (альт. кат)
+"774":  100259,   # Масляный фильтр (альт. кат)
+"8":    100260,   # Воздушный фильтр
+"424":  100263,   # Фильтр салона
+"281":  100030,   # Тормозные колодки (передние)
+"282":  100030,   # Тормозные колодки (задние)
+"82":   100032,   # Тормозной диск (передний)
+"84":   100032,   # Тормозной диск (задний)
+"1041": 100121,   # Амортизатор (передний)
+"1042": 100121,   # Амортизатор (задний)
+"686":  100151,   # Свеча зажигания
+"685":  100151,   # Свеча зажигания (альт. кат)
+"188":  100113,   # Пружина подвески (передняя)
+"189":  100113,   # Пружина подвески (задняя)
+}
+
+# ── Известные makeId для быстрого поиска без запроса к getMakes ───────────────
+KNOWN_MAKE_IDS: dict[str, int] = {
+"MITSUBISHI":    77,
+"AUDI":           5,
+"TOYOTA":        None,   # заполнить при первом запросе
+"VOLKSWAGEN":    None,
+"BMW":           None,
+"MERCEDES-BENZ": None,
+"NISSAN":        None,
+"HONDA":         None,
+"KIA":           None,
+"HYUNDAI":       None,
+"MAZDA":         None,
+"SUBARU":        None,
+"FORD":          None,
+"OPEL":          None,
+"RENAULT":       None,
+"PEUGEOT":       None,
+"CITROEN":       None,
+"SKODA":         None,
+"VOLVO":         None,
+"INFINITI":      None,
+"LEXUS":         None,
+}
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -65,7 +111,7 @@ async def vin_decode_oe(session: aiohttp.ClientSession, vin: str) -> dict | None
 """
 Возвращает dict с полями:
     manuName, modelName, typeName, katalog, modely, rynok,
-    + все сырые поля из arr (carId, ktype и др. если есть)
+    + все сырые поля из arr (_raw)
 или None при ошибке.
 """
 data = await _get(session, {
@@ -82,15 +128,13 @@ if not arr:
     return None
 
 return {
-    # стандартные поля
     "manuName":  arr.get("brend", ""),
     "modelName": arr.get("naimenovanie", ""),
     "typeName":  arr.get("modifikaciya", ""),
     "katalog":   arr.get("katalog", ""),
     "modely":    arr.get("modely", ""),
     "rynok":     arr.get("rynok", ""),
-    # сохраняем весь сырой ответ — пригодится для отладки и новых полей
-    "_raw": arr,
+    "_raw":      arr,
 }
 
 
@@ -138,21 +182,87 @@ return []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4. TecDoc: дерево групп и артикулы по carId
+# 4. getMakes / getModels / getCars — навигация по каталогу TecDoc
+# ВАЖНО: параметр называется carType (не vehicleType!)
+# ══════════════════════════════════════════════════════════════════════════════
+
+async def get_makes(
+session: aiohttp.ClientSession,
+car_type: str = "PC",
+) -> list[dict]:
+"""
+getMakes — список производителей.
+Каждый элемент: {"makeId": int, "makeName": str}
+"""
+data = await _get(session, {
+    "method": "getMakes",
+    "key": PARTSAPI_KEY_TECDOC,
+    "carType": car_type,
+    "lang": LANG_RU,
+})
+return data if isinstance(data, list) else []
+
+
+async def get_models(
+session: aiohttp.ClientSession,
+make_id: int,
+car_type: str = "PC",
+) -> list[dict]:
+"""
+getModels — список моделей производителя.
+Каждый элемент: {"makeId": int, "makeName": str, "modelId": int, "modelName": str}
+"""
+data = await _get(session, {
+    "method": "getModels",
+    "key": PARTSAPI_KEY_TECDOC,
+    "makeId": make_id,
+    "carType": car_type,
+    "lang": LANG_RU,
+})
+return data if isinstance(data, list) else []
+
+
+async def get_cars(
+session: aiohttp.ClientSession,
+make_id: int,
+model_id: int,
+car_type: str = "PC",
+) -> list[dict]:
+"""
+getCars — список модификаций модели.
+Каждый элемент содержит carId (числовой), нужный для getSearchTree/getArticles.
+Поля: carId, carName, makeId, makeName, modelId, modelName,
+      CAPACITY, POWER_KW, POWER_PS, yearStart, yearEnd,
+      BODY_TYPE_RU, ENGINE_TYPE_RU
+"""
+data = await _get(session, {
+    "method": "getCars",
+    "key": PARTSAPI_KEY_TECDOC,
+    "makeId": make_id,
+    "modelId": model_id,
+    "carType": car_type,
+    "lang": LANG_RU,
+})
+return data if isinstance(data, list) else []
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 5. getSearchTree / getArticles — дерево групп и артикулы по carId
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_search_tree(
 session: aiohttp.ClientSession,
-car_id: str | int,
+car_id: int | str,
 car_type: str = "PC",
 ) -> list[dict]:
 """
 getSearchTree — дерево товарных групп для модификации авто.
 
-car_id   — идентификатор модификации (carId из getCars или modely из VINdecodeOE)
-car_type — "PC" (легковые) | "CV" (грузовые) | "Motorcycle"
+car_id   — числовой идентификатор из getCars (например 111480 для CW6W)
+car_type — "PC" | "CV" | "Motorcycle"
 
-Возвращает список узлов дерева или [] при ошибке.
+Каждый узел содержит: STR_ID, STR_ID_PARENT, STR_LEVEL, STR_NODE_NAME, STR_PATH
+Возвращает список узлов или [] при ошибке.
 """
 data = await _get(session, {
     "method": "getSearchTree",
@@ -170,19 +280,19 @@ return []
 
 async def get_articles(
 session: aiohttp.ClientSession,
-car_id: str | int,
-str_id: str | int,
+car_id: int | str,
+str_id: int | str,
 car_type: str = "PC",
 ) -> list[dict]:
 """
 getArticles — артикулы для выбранной группы дерева.
 
-car_id  — идентификатор модификации
-str_id  — идентификатор узла дерева (NODE_1_STR_ID / NODE_2_STR_ID / NODE_3_STR_ID)
+car_id  — числовой идентификатор модификации (из getCars)
+str_id  — STR_ID узла дерева (из CAT_TO_STR_ID или getSearchTree)
 car_type — "PC" | "CV" | "Motorcycle"
 
+Каждый элемент содержит: SUP_BRAND, ART_ARTICLE_NR, ART_ID, PRODUCT_GROUP, PT_ID
 Возвращает список артикулов или [] при ошибке.
-Каждый элемент содержит: SUP_BRAND, ART_ARTICLE_NR, ART_ID, PRODUCT_GROUP, PT_ID.
 """
 data = await _get(session, {
     "method": "getArticles",
@@ -199,8 +309,100 @@ if isinstance(data, dict) and data.get("error_code"):
 return []
 
 
+def get_str_id_for_cat(cat: str) -> int | None:
+"""
+Возвращает STR_ID дерева TecDoc для заданного cat_id бота.
+Возвращает None если маппинг не найден.
+"""
+return CAT_TO_STR_ID.get(str(cat))
+
+
 # ══════════════════════════════════════════════════════════════════════════════
-# 5. getOEApplicability — проверка применяемости OEM артикула
+# 6. resolve_car_id — получить числовой carId по modely из VINdecodeOE
+# ══════════════════════════════════════════════════════════════════════════════
+
+async def resolve_car_id(
+session: aiohttp.ClientSession,
+manu_name: str,
+modely: str,
+year: int | None = None,
+) -> int | None:
+"""
+Находит числовой carId для getSearchTree по данным из VINdecodeOE.
+
+manu_name — марка (например "MITSUBISHI")
+modely    — код модификации из VINdecodeOE (например "CW6W")
+year      — год выпуска для уточнения при нескольких совпадениях
+
+Алгоритм:
+  1. getMakes → найти makeId по manu_name
+  2. getModels → найти modelId по вхождению modely в modelName
+  3. getCars → найти carId по вхождению modely в carName
+
+Возвращает числовой carId или None если не найдено.
+Результат кэшируется в KNOWN_MAKE_IDS для makeId.
+"""
+manu_upper = manu_name.upper().strip()
+modely_upper = modely.upper().strip()
+
+# Шаг 1: makeId
+make_id = KNOWN_MAKE_IDS.get(manu_upper)
+if make_id is None:
+    makes = await get_makes(session)
+    for m in makes:
+        if m.get("makeName", "").upper() == manu_upper:
+            make_id = m["makeId"]
+            KNOWN_MAKE_IDS[manu_upper] = make_id
+            break
+if make_id is None:
+    logger.warning("[resolve_car_id] makeId не найден для %s", manu_upper)
+    return None
+
+# Шаг 2: modelId — ищем модель где modely встречается в названии
+models = await get_models(session, make_id)
+model_id = None
+for m in models:
+    name = m.get("modelName", "").upper()
+    # modely типа "CW6W" должен встречаться в скобках: "OUTLANDER II (CW_W)"
+    # ищем по первым двум символам кода (CW) чтобы покрыть CW0W/CW6W/CW8W
+    if len(modely_upper) >= 2 and modely_upper[:2] in name:
+        model_id = m["modelId"]
+        break
+if model_id is None:
+    logger.warning("[resolve_car_id] modelId не найден для %s modely=%s", manu_upper, modely_upper)
+    return None
+
+# Шаг 3: carId — ищем модификацию где modely точно совпадает в carName
+cars = await get_cars(session, make_id, model_id)
+best_car_id = None
+for c in cars:
+    car_name = c.get("carName", "").upper()
+    if modely_upper in car_name:
+        car_id_val = c.get("carId")
+        if car_id_val is None:
+            continue
+        # Если год известен — выбираем наиболее подходящий по дате
+        if year and best_car_id is None:
+            year_start = c.get("yearStart", "")
+            year_end = c.get("yearEnd", "")
+            try:
+                ys = int(str(year_start)[:4]) if year_start else 0
+                ye = int(str(year_end)[:4]) if year_end else 9999
+                if ys <= year <= ye:
+                    best_car_id = int(car_id_val)
+                    continue
+            except (ValueError, TypeError):
+                pass
+        if best_car_id is None:
+            best_car_id = int(car_id_val)
+
+if best_car_id is None:
+    logger.warning("[resolve_car_id] carId не найден для %s modely=%s", manu_upper, modely_upper)
+return best_car_id
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 7. getOEApplicability — проверка применяемости OEM артикула
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_oe_applicability(
@@ -229,7 +431,7 @@ return []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 6. toParts — детали для ТО по модификации
+# 8. toParts / toOils — детали и жидкости для ТО
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_to_parts(
@@ -237,11 +439,10 @@ session: aiohttp.ClientSession,
 type_id: str | int,
 ) -> list[dict]:
 """
-toParts — список деталей для технического обслуживания модификации.
-Стабильная альтернатива getPartsbyVIN для ТО-категорий (фильтры, свечи, масло).
+toParts — список деталей для ТО модификации.
+Стабильная альтернатива getPartsbyVIN для ТО-категорий.
 
 type_id — идентификатор модификации ТС (из toTypes)
-
 Возвращает список деталей или [] при ошибке.
 """
 data = await _get(session, {
@@ -263,7 +464,6 @@ type_id: str | int,
 ) -> list[dict]:
 """
 toOils — заправочные объёмы жидкостей для модификации.
-
 Возвращает список объёмов или [] при ошибке.
 """
 data = await _get(session, {
@@ -277,64 +477,3 @@ if isinstance(data, list):
 if isinstance(data, dict) and data.get("error_code"):
     logger.warning("[toOils] typeId=%s error: %s", type_id, data.get("message"))
 return []
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 7. getMakes / getModels / getCars — навигация по каталогу TecDoc
-# ══════════════════════════════════════════════════════════════════════════════
-
-async def get_makes(
-session: aiohttp.ClientSession,
-vehicle_type: str = "PC",
-) -> list[dict]:
-"""
-getMakes — список производителей.
-Каждый элемент: {"makeId": int, "makeName": str}
-"""
-data = await _get(session, {
-    "method": "getMakes",
-    "key": PARTSAPI_KEY_TECDOC,
-    "vehicleType": vehicle_type,
-    "lang": LANG_RU,
-})
-return data if isinstance(data, list) else []
-
-
-async def get_models(
-session: aiohttp.ClientSession,
-make_id: int,
-vehicle_type: str = "PC",
-) -> list[dict]:
-"""
-getModels — список моделей производителя.
-Каждый элемент: {"makeId": int, "makeName": str, "modelId": int, "modelName": str}
-"""
-data = await _get(session, {
-    "method": "getModels",
-    "key": PARTSAPI_KEY_TECDOC,
-    "makeId": make_id,
-    "vehicleType": vehicle_type,
-    "lang": LANG_RU,
-})
-return data if isinstance(data, list) else []
-
-
-async def get_cars(
-session: aiohttp.ClientSession,
-make_id: int,
-model_id: int,
-vehicle_type: str = "PC",
-) -> list[dict]:
-"""
-getCars — список модификаций модели.
-Содержит carId, который нужен для getSearchTree и getArticles.
-"""
-data = await _get(session, {
-    "method": "getCars",
-    "key": PARTSAPI_KEY_TECDOC,
-    "makeId": make_id,
-    "modelId": model_id,
-    "vehicleType": vehicle_type,
-    "lang": LANG_RU,
-})
-return data if isinstance(data, list) else []
