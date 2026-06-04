@@ -14,7 +14,7 @@ BASE_URL = "https://api.partsapi.ru"
 
 # ── API ключи (каждый метод — свой ключ) ──────────────────────────────────────
 PARTSAPI_KEY_VINDECODE = os.getenv("PARTSAPI_KEY_VINDECODE")   # VINdecodeOE
-PARTSAPI_KEY_VIN       = os.getenv("PARTSAPI_KEY_VIN")         # getPartsbyVIN
+PARTSAPI_KEY_VIN       = os.getenv("PARTSAPI_KEY_VIN")         # getPartsbyVIN (резерв)
 PARTSAPI_KEY_CROSSES   = os.getenv("PARTSAPI_KEY_CROSSES")     # tecdocCrosses
 PARTSAPI_KEY_MAKES     = os.getenv("PARTSAPI_KEY_MAKES")        # getMakes
 PARTSAPI_KEY_MODELS    = os.getenv("PARTSAPI_KEY_MODELS")       # getModels
@@ -26,13 +26,12 @@ DEFAULT_TIMEOUT = 15.0
 LANG_RU = 16  # язык ответов — русский
 
 # ── Маппинг cat_id бота → STR_ID дерева TecDoc ────────────────────────────────
-# Получен из getSearchTree(carId=111480) для MITSUBISHI OUTLANDER II CW6W.
-# STR_ID стабильны между модификациями — используем как универсальный маппинг.
 CAT_TO_STR_ID: dict[str, int] = {
 "7":    100259,   # Масляный фильтр
 "10":   100259,   # Масляный фильтр (альт. кат)
 "774":  100259,   # Масляный фильтр (альт. кат)
 "8":    100260,   # Воздушный фильтр
+"9":    100261,   # Топливный фильтр
 "424":  100263,   # Фильтр салона
 "281":  100030,   # Тормозные колодки (передние)
 "282":  100030,   # Тормозные колодки (задние)
@@ -42,8 +41,17 @@ CAT_TO_STR_ID: dict[str, int] = {
 "1042": 100121,   # Амортизатор (задний)
 "686":  100151,   # Свеча зажигания
 "685":  100151,   # Свеча зажигания (альт. кат)
+"689":  100153,   # Катушка зажигания
 "188":  100113,   # Пружина подвески (передняя)
 "189":  100113,   # Пружина подвески (задняя)
+"273":  100110,   # Рычаг подвески (передний)
+"274":  100110,   # Рычаг подвески (задний)
+"1037": 100112,   # Шаровая опора
+"306":  100170,   # Ремень ГРМ
+"307":  100170,   # Комплект ГРМ
+"470":  100060,   # Радиатор
+"655":  100130,   # Подшипник ступицы
+"5":    100100,   # ШРУС
 }
 
 # ── Кэш makeId чтобы не тратить запросы к getMakes ───────────────────────────
@@ -89,8 +97,9 @@ except Exception as e:
 async def vin_decode_oe(session: aiohttp.ClientSession, vin: str) -> dict | None:
 """
 Расшифровка VIN по оригинальным каталогам.
-Возвращает dict: manuName, modelName, typeName, katalog, modely, rynok, _raw
-или None при ошибке.
+Возвращает dict с полями: brend, naimenovanie, modifikaciya, katalog,
+modely, rynok, data_vypuska и _raw (полный ответ).
+None при ошибке.
 """
 data = await _get(session, {
     "method": "VINdecodeOE",
@@ -104,41 +113,23 @@ arr = data.get("data", {}).get("array", {})
 if not arr:
     return None
 return {
-    "manuName":  arr.get("brend", ""),
-    "modelName": arr.get("naimenovanie", ""),
-    "typeName":  arr.get("modifikaciya", ""),
-    "katalog":   arr.get("katalog", ""),
-    "modely":    arr.get("modely", ""),
-    "rynok":     arr.get("rynok", ""),
-    "_raw":      arr,
+    "brend":        arr.get("brend", ""),
+    "naimenovanie": arr.get("naimenovanie", ""),
+    "modifikaciya": arr.get("modifikaciya", ""),
+    "katalog":      arr.get("katalog", ""),
+    "modely":       arr.get("modely", ""),
+    "rynok":        arr.get("rynok", ""),
+    "data_vypuska": arr.get("data_vypuska", ""),
+    # алиасы для совместимости с test_vin_bot.py
+    "manuName":     arr.get("brend", ""),
+    "modelName":    arr.get("naimenovanie", ""),
+    "typeName":     arr.get("modifikaciya", ""),
+    "_raw":         arr,
 }
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 2. getPartsbyVIN — основной метод, остаётся как primary
-# ══════════════════════════════════════════════════════════════════════════════
-
-async def get_parts_by_vin(
-session: aiohttp.ClientSession,
-vin: str,
-cat: str,
-timeout: float = DEFAULT_TIMEOUT,
-) -> dict | None:
-"""
-OEM запчасти по VIN и категории.
-Возвращает сырой JSON или None. Нормализация и кэш — в test_vin_bot.py.
-"""
-return await _get(session, {
-    "method": "getPartsbyVIN",
-    "key": PARTSAPI_KEY_VIN,
-    "vin": vin,
-    "type": "oem",
-    "cat": cat,
-}, timeout=timeout)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 3. tecdocCrosses
+# 2. tecdocCrosses
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_crosses(session: aiohttp.ClientSession, article: str) -> list:
@@ -156,7 +147,7 @@ return []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4. getMakes / getModels / getCars — у каждого свой ключ!
+# 3. getMakes / getModels / getCars
 # ВАЖНО: параметр carType (не vehicleType!)
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -214,7 +205,7 @@ return data if isinstance(data, list) else []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 5. getSearchTree / getArticles — у каждого свой ключ!
+# 4. getSearchTree / getArticles
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_search_tree(
@@ -264,7 +255,10 @@ data = await _get(session, {
 if isinstance(data, list):
     return data
 if isinstance(data, dict) and data.get("error_code"):
-    logger.warning("[getArticles] carId=%s strId=%s error: %s", car_id, str_id, data.get("message"))
+    logger.warning(
+        "[getArticles] carId=%s strId=%s error: %s",
+        car_id, str_id, data.get("message"),
+    )
 return []
 
 
@@ -274,7 +268,7 @@ return CAT_TO_STR_ID.get(str(cat))
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 6. resolve_car_id — modely из VINdecodeOE → числовой carId для getSearchTree
+# 5. resolve_car_id — modely из VINdecodeOE → числовой carId
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def resolve_car_id(
@@ -295,7 +289,7 @@ makeId кэшируется в KNOWN_MAKE_IDS — экономит 1 запро�
 Расходует до 3 запросов (makes + models + cars).
 Возвращает числовой carId или None.
 """
-manu_upper = manu_name.upper().strip()
+manu_upper   = manu_name.upper().strip()
 modely_upper = modely.upper().strip()
 
 # Шаг 1: makeId (из кэша или getMakes)
@@ -321,7 +315,10 @@ for m in models:
         model_id = m["modelId"]
         break
 if model_id is None:
-    logger.warning("[resolve_car_id] modelId не найден для %s modely=%s", manu_upper, modely_upper)
+    logger.warning(
+        "[resolve_car_id] modelId не найден для %s modely=%s",
+        manu_upper, modely_upper,
+    )
     return None
 
 # Шаг 3: carId — точное совпадение modely в carName, уточняем по году
@@ -350,5 +347,8 @@ for c in cars:
 
 result = best if best is not None else fallback
 if result is None:
-    logger.warning("[resolve_car_id] carId не найден для %s modely=%s", manu_upper, modely_upper)
+    logger.warning(
+        "[resolve_car_id] carId не найден для %s modely=%s",
+        manu_upper, modely_upper,
+    )
 return result
