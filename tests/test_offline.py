@@ -387,6 +387,296 @@ def test_build_coverage_levels_and_stop():
 
 
 # ══════════════════════════════════════════════════════════════════
+#  ТЕСТЫ: безопасный fallback для БЕСПОЗИЦИОННЫХ категорий
+#  (ERR/timeout или NO → типовой OEM марки + аналоги)
+# ══════════════════════════════════════════════════════════════════
+
+# Фейковые аналоги для типового OEM MITSUBISHI масляного фильтра (cat 7).
+# Структура повторяет реальный ответ tecdocCrosses: brand/number.
+_FAKE_OIL_CROSSES = [
+    {"brand": "BOSCH", "number": "0986AF1058"},
+    {"brand": "MANN-FILTER", "number": "W 610/6"},
+    {"brand": "MAHLE", "number": "OC 612"},
+    {"brand": "NONAME", "number": "XX-1"},
+]
+
+
+class _FakeClientSession:
+    """Минимальный async-context-manager вместо aiohttp.ClientSession.
+
+    cmd_vin делает `async with aiohttp.ClientSession() as session:` —
+    в оффлайне реальные HTTP-вызовы всё равно замоканы (api_vindecode /
+    fetch_parts_with_cat_fallback / api_get_crosses подменяются), поэтому
+    сессия здесь — пустышка.
+    """
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *a):
+        return False
+
+
+def _patch_session():
+    orig = b.aiohttp.ClientSession
+    b.aiohttp.ClientSession = _FakeClientSession
+    return orig
+
+
+def _patch_crosses(monkey_returns):
+    """Контекст-менеджер-замена: подменяет b.api_get_crosses на async-функцию.
+
+    monkey_returns: callable(art) -> list | сам list (для всех артикулов).
+    Возвращает (restore_fn, calls_list).
+    """
+    calls: list[str] = []
+    orig = b.api_get_crosses
+
+    async def fake(session, number):
+        calls.append(number)
+        if callable(monkey_returns):
+            return monkey_returns(number)
+        return list(monkey_returns)
+
+    b.api_get_crosses = fake
+    return orig, calls
+
+
+def test_nonpositional_fallback_allowed_matrix():
+    # Беспозиционные расходники: масл/возд/салон/свечи/топл
+    assert b.is_nonpositional_fallback_allowed("7", "NO", None) is True
+    assert b.is_nonpositional_fallback_allowed("8", "ERR", "TimeoutError") is True
+    assert b.is_nonpositional_fallback_allowed("424", "ERR", None) is True
+    assert b.is_nonpositional_fallback_allowed("686", "NO", None) is True
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "ServerTimeoutError") is True
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "NULL_BODY") is True
+
+    # Жёсткие ошибки источника — НЕ молчание, fallback запрещён
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "RATE_LIMIT") is False
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "AUTH") is False
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "JSON_ERROR") is False
+    assert b.is_nonpositional_fallback_allowed("7", "ERR", "SERVER_ERROR") is False
+
+    # Позиционные категории — fallback ВСЕГДА запрещён
+    for cat in ("281", "282", "82", "84", "1041", "1042"):
+        assert b.is_nonpositional_fallback_allowed(cat, "NO", None) is False
+        assert b.is_nonpositional_fallback_allowed(cat, "ERR", "TimeoutError") is False
+
+    # Критичные (ГРМ) — запрещено даже при пустом ответе
+    assert b.is_nonpositional_fallback_allowed("306", "NO", None) is False
+    assert b.is_nonpositional_fallback_allowed("307", "ERR", "TimeoutError") is False
+
+    # Явно указанная сторона — перестраховка, fallback off
+    assert b.is_nonpositional_fallback_allowed("7", "NO", None, explicit_side=True) is False
+
+    # OK не должен включать резерв (есть живые данные)
+    assert b.is_nonpositional_fallback_allowed("7", "OK", None) is False
+
+
+def test_try_oem_fallback_returns_typical_oem_with_crosses():
+    orig, calls = _patch_crosses(_FAKE_OIL_CROSSES)
+    try:
+        res = asyncio.run(b.try_oem_fallback(None, MANU, "7", part_name="масляный фильтр"))
+    finally:
+        b.api_get_crosses = orig
+
+    assert res is not None
+    (fb_brand, fb_art), crosses = res
+    # Бренд — марка авто; артикул — первый типовой OEM из словаря
+    assert fb_brand == MANU
+    assert b.normalize_article(fb_art) == b.normalize_article("MD360935")
+    # Аналоги отфильтрованы и отсортированы: BOSCH/MANN/MAHLE впереди шумного NONAME
+    assert crosses, "должны быть аналоги"
+    assert crosses[0][0].upper() == "BOSCH"
+    brands = [c[0].upper() for c in crosses]
+    assert "NONAME" in brands and brands.index("NONAME") > brands.index("BOSCH")
+
+
+def test_try_oem_fallback_no_crosses_still_returns_oem():
+    # tecdocCrosses молчит для всех кандидатов -> отдаём первый OEM без аналогов
+    orig, _calls = _patch_crosses([])
+    try:
+        res = asyncio.run(b.try_oem_fallback(None, MANU, "8", part_name="воздушный фильтр"))
+    finally:
+        b.api_get_crosses = orig
+    assert res is not None
+    (fb_brand, fb_art), crosses = res
+    assert fb_brand == MANU
+    assert b.normalize_article(fb_art) == b.normalize_article("1500A023")
+    assert crosses == []
+
+
+def test_try_oem_fallback_respects_blacklist():
+    # Для амортизатора MR992330 в блэклисте — но это позиционная деталь;
+    # проверяем, что blacklist реально отсекает кандидата.
+    # Возьмём гипотетическую марку/cat: используем MITSUBISHI cat 1042
+    # (там в словаре только MR992330) + part_name 'амортизатор'.
+    orig, _calls = _patch_crosses(_FAKE_OIL_CROSSES)
+    try:
+        res = asyncio.run(b.try_oem_fallback(None, MANU, "1042", part_name="амортизатор задний"))
+    finally:
+        b.api_get_crosses = orig
+    # Единственный кандидат MR992330 заблокирован -> None
+    assert res is None
+
+
+def test_try_oem_fallback_unknown_brand_returns_none():
+    res = asyncio.run(b.try_oem_fallback(None, "UNKNOWNCAR", "7", part_name="масляный фильтр"))
+    assert res is None
+
+
+def test_nonpositional_fallback_message_content():
+    msg = b.build_nonpositional_fallback_message(
+        group_name="масляный фильтр", car_str="MITSUBISHI OUTLANDER",
+        vin="VINX", cat_id="7", manu_name=MANU,
+        fb_brand=MANU, fb_art="MD360935",
+        fb_crosses=[("BOSCH", "0986AF1058"), ("MANN-FILTER", "W 610/6")],
+        reason="timeout/TimeoutError",
+    )
+    assert "Источник не дал данных" in msg
+    assert "timeout/TimeoutError" in msg
+    assert MANU in msg
+    assert "MD360935" in msg
+    assert "BOSCH" in msg
+    assert "сверь" in msg.lower()
+
+
+def test_cmd_vin_err_timeout_triggers_nonpositional_fallback():
+    """Интеграция: масляный фильтр (cat 7) даёт стабильный TimeoutError,
+    бот показывает типовой OEM + аналоги (а не голый отказ)."""
+    b.PARTSAPI_KEY_VINDECODE = "x"
+    sent: list[str] = []
+
+    class FakeMsg:
+        async def reply_text(self, text, **k):
+            sent.append(text)
+
+    class FakeUpdate:
+        message = FakeMsg()
+
+    class FakeCtx:
+        args = ["Z8TXLCW6WCM902224", "масляный", "фильтр"]
+
+    async def fake_vd(session, vin):
+        return {"manuName": MANU, "modelName": "OUTLANDER"}
+
+    # cat 7 + все альтернативы (10/774) -> стабильный TimeoutError
+    async def fake_fetch(session, vin, cat, position=None):
+        return cat, b.normalize_getparts_response(
+            None, None, exception=TimeoutError("slow"), cat=cat, vin=vin)
+
+    orig_vd = b.api_vindecode
+    orig_fetch = b.fetch_parts_with_cat_fallback
+    orig_cross, _calls = _patch_crosses(_FAKE_OIL_CROSSES)
+    orig_sess = _patch_session()
+    b.api_vindecode = fake_vd
+    b.fetch_parts_with_cat_fallback = fake_fetch
+    try:
+        asyncio.run(b.cmd_vin(FakeUpdate(), FakeCtx()))
+    finally:
+        b.api_vindecode = orig_vd
+        b.fetch_parts_with_cat_fallback = orig_fetch
+        b.api_get_crosses = orig_cross
+        b.aiohttp.ClientSession = orig_sess
+
+    joined = "\n".join(sent)
+    # Должна быть честная пометка про timeout + типовой OEM + аналоги
+    assert "Источник не дал данных" in joined
+    assert b.normalize_article("MD360935") in joined.replace("-", "").replace(" ", "").upper()
+    assert "BOSCH" in joined
+
+
+def test_cmd_vin_rate_limit_no_fallback():
+    """RATE_LIMIT по беспозиционной cat -> НЕ показываем типовой OEM,
+    оставляем честный ERR-отказ (бережём ключ, не вводим в заблуждение)."""
+    b.PARTSAPI_KEY_VINDECODE = "x"
+    sent: list[str] = []
+
+    class FakeMsg:
+        async def reply_text(self, text, **k):
+            sent.append(text)
+
+    class FakeUpdate:
+        message = FakeMsg()
+
+    class FakeCtx:
+        args = ["Z8TXLCW6WCM902224", "масляный", "фильтр"]
+
+    async def fake_vd(session, vin):
+        return {"manuName": MANU}
+
+    async def fake_fetch(session, vin, cat, position=None):
+        return cat, b.normalize_getparts_response(
+            {"error_code": 5000, "message": "Exceeded the number of requests", "status": 401},
+            401, cat=cat, vin=vin)
+
+    crosses_called: list[str] = []
+
+    async def fake_cross(session, number):
+        crosses_called.append(number)
+        return _FAKE_OIL_CROSSES
+
+    orig_vd = b.api_vindecode
+    orig_fetch = b.fetch_parts_with_cat_fallback
+    orig_cross = b.api_get_crosses
+    orig_sess = _patch_session()
+    b.api_vindecode = fake_vd
+    b.fetch_parts_with_cat_fallback = fake_fetch
+    b.api_get_crosses = fake_cross
+    try:
+        asyncio.run(b.cmd_vin(FakeUpdate(), FakeCtx()))
+    finally:
+        b.api_vindecode = orig_vd
+        b.fetch_parts_with_cat_fallback = orig_fetch
+        b.api_get_crosses = orig_cross
+        b.aiohttp.ClientSession = orig_sess
+
+    joined = "\n".join(sent)
+    assert "Источник не дал данных" not in joined   # резерв НЕ показан
+    assert "не удалось надёжно получить данные" in joined
+    assert crosses_called == []                      # crosses не дёргали
+
+
+def test_cmd_vin_no_data_nonpositional_fallback():
+    """Пустой ответ NO по беспозиционной cat -> типовой OEM с пометкой «пусто»."""
+    b.PARTSAPI_KEY_VINDECODE = "x"
+    sent: list[str] = []
+
+    class FakeMsg:
+        async def reply_text(self, text, **k):
+            sent.append(text)
+
+    class FakeUpdate:
+        message = FakeMsg()
+
+    class FakeCtx:
+        args = ["Z8TXLCW6WCM902224", "воздушный", "фильтр"]
+
+    async def fake_vd(session, vin):
+        return {"manuName": MANU}
+
+    async def fake_fetch(session, vin, cat, position=None):
+        return cat, b.normalize_getparts_response([], 200, cat=cat, vin=vin)  # NO
+
+    orig_vd = b.api_vindecode
+    orig_fetch = b.fetch_parts_with_cat_fallback
+    orig_cross, _ = _patch_crosses(_FAKE_OIL_CROSSES)
+    orig_sess = _patch_session()
+    b.api_vindecode = fake_vd
+    b.fetch_parts_with_cat_fallback = fake_fetch
+    try:
+        asyncio.run(b.cmd_vin(FakeUpdate(), FakeCtx()))
+    finally:
+        b.api_vindecode = orig_vd
+        b.fetch_parts_with_cat_fallback = orig_fetch
+        b.api_get_crosses = orig_cross
+        b.aiohttp.ClientSession = orig_sess
+
+    joined = "\n".join(sent)
+    assert "Источник не дал данных (пусто)" in joined
+    assert "1500A023" in joined.replace("-", "").upper()
+
+
+# ══════════════════════════════════════════════════════════════════
 #  Самостоятельный запуск без pytest
 # ══════════════════════════════════════════════════════════════════
 
