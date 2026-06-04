@@ -12,13 +12,15 @@ logger = logging.getLogger(__name__)
 
 BASE_URL = "https://api.partsapi.ru"
 
-# ── API ключи ─────────────────────────────────────────────────────────────────
+# ── API ключи (каждый метод — свой ключ) ──────────────────────────────────────
 PARTSAPI_KEY_VINDECODE = os.getenv("PARTSAPI_KEY_VINDECODE")   # VINdecodeOE
 PARTSAPI_KEY_VIN       = os.getenv("PARTSAPI_KEY_VIN")         # getPartsbyVIN
 PARTSAPI_KEY_CROSSES   = os.getenv("PARTSAPI_KEY_CROSSES")     # tecdocCrosses
-PARTSAPI_KEY_CARS      = os.getenv("PARTSAPI_KEY_CARS")        # getMakes / getModels / getCars
-PARTSAPI_KEY_TREE      = os.getenv("PARTSAPI_KEY_TREE")        # getSearchTree
-PARTSAPI_KEY_ARTICLES  = os.getenv("PARTSAPI_KEY_ARTICLES")    # getArticles
+PARTSAPI_KEY_MAKES     = os.getenv("PARTSAPI_KEY_MAKES")        # getMakes
+PARTSAPI_KEY_MODELS    = os.getenv("PARTSAPI_KEY_MODELS")       # getModels
+PARTSAPI_KEY_CARS      = os.getenv("PARTSAPI_KEY_CARS")         # getCars
+PARTSAPI_KEY_TREE      = os.getenv("PARTSAPI_KEY_TREE")         # getSearchTree
+PARTSAPI_KEY_ARTICLES  = os.getenv("PARTSAPI_KEY_ARTICLES")     # getArticles
 
 DEFAULT_TIMEOUT = 15.0
 LANG_RU = 16  # язык ответов — русский
@@ -44,7 +46,7 @@ CAT_TO_STR_ID: dict[str, int] = {
 "189":  100113,   # Пружина подвески (задняя)
 }
 
-# ── Известные makeId (кэш чтобы не тратить запросы к getMakes) ───────────────
+# ── Кэш makeId чтобы не тратить запросы к getMakes ───────────────────────────
 KNOWN_MAKE_IDS: dict[str, int | None] = {
 "MITSUBISHI": 77,
 "AUDI":        5,
@@ -113,7 +115,7 @@ return {
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 2. getPartsbyVIN
+# 2. getPartsbyVIN — основной метод, остаётся как primary
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_parts_by_vin(
@@ -154,7 +156,7 @@ return []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4. getMakes / getModels / getCars
+# 4. getMakes / getModels / getCars — у каждого свой ключ!
 # ВАЖНО: параметр carType (не vehicleType!)
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -165,7 +167,7 @@ car_type: str = "PC",
 """Список производителей. Каждый элемент: {makeId, makeName}"""
 data = await _get(session, {
     "method": "getMakes",
-    "key": PARTSAPI_KEY_CARS,
+    "key": PARTSAPI_KEY_MAKES,
     "carType": car_type,
     "lang": LANG_RU,
 })
@@ -180,7 +182,7 @@ car_type: str = "PC",
 """Список моделей производителя. Каждый элемент: {makeId, makeName, modelId, modelName}"""
 data = await _get(session, {
     "method": "getModels",
-    "key": PARTSAPI_KEY_CARS,
+    "key": PARTSAPI_KEY_MODELS,
     "makeId": make_id,
     "carType": car_type,
     "lang": LANG_RU,
@@ -196,10 +198,9 @@ car_type: str = "PC",
 ) -> list[dict]:
 """
 Список модификаций модели.
-Каждый элемент: {carId, carName, makeId, makeName, modelId, modelName,
-                 CAPACITY, POWER_KW, POWER_PS, yearStart, yearEnd,
-                 BODY_TYPE_RU, ENGINE_TYPE_RU}
 carId — числовой, нужен для getSearchTree/getArticles.
+Поля: carId, carName, makeId, makeName, modelId, modelName,
+      CAPACITY, POWER_KW, POWER_PS, yearStart, yearEnd
 """
 data = await _get(session, {
     "method": "getCars",
@@ -213,7 +214,7 @@ return data if isinstance(data, list) else []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 5. getSearchTree / getArticles
+# 5. getSearchTree / getArticles — у каждого свой ключ!
 # ══════════════════════════════════════════════════════════════════════════════
 
 async def get_search_tree(
@@ -290,7 +291,8 @@ modely    — код модификации ("CW6W")
 year      — год выпуска для уточнения при нескольких совпадениях
 
 Алгоритм: getMakes → getModels → getCars → carId
-Расходует до 3 запросов из лимита (makeId кэшируется в KNOWN_MAKE_IDS).
+makeId кэшируется в KNOWN_MAKE_IDS — экономит 1 запрос из лимита.
+Расходует до 3 запросов (makes + models + cars).
 Возвращает числовой carId или None.
 """
 manu_upper = manu_name.upper().strip()
@@ -309,7 +311,7 @@ if make_id is None:
     logger.warning("[resolve_car_id] makeId не найден для %s", manu_upper)
     return None
 
-# Шаг 2: modelId — ищем по первым 2 символам modely в скобках modelName
+# Шаг 2: modelId — ищем по первым 2 символам modely в modelName
 # "CW6W" → ищем "CW" в "OUTLANDER II (CW_W)"
 models = await get_models(session, make_id)
 model_id = None
@@ -322,7 +324,7 @@ if model_id is None:
     logger.warning("[resolve_car_id] modelId не найден для %s modely=%s", manu_upper, modely_upper)
     return None
 
-# Шаг 3: carId — точное совпадение modely в carName
+# Шаг 3: carId — точное совпадение modely в carName, уточняем по году
 cars = await get_cars(session, make_id, model_id)
 best: int | None = None
 fallback: int | None = None
@@ -334,13 +336,13 @@ for c in cars:
     if raw_id is None:
         continue
     cid = int(raw_id)
-    if year:
+    if year and best is None:
         try:
             ys = int(str(c.get("yearStart", "0"))[:4])
             ye = int(str(c.get("yearEnd", "9999"))[:4])
             if ys <= year <= ye:
                 best = cid
-                break
+                continue
         except (ValueError, TypeError):
             pass
     if fallback is None:
